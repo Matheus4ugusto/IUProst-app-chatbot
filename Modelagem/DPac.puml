@@ -1,0 +1,15 @@
+@startuml
+package app {
+  class "_layout.tsx\n[app/_layout.tsx]" as AppLayout
+  package "(tabs)" {
+    class "_layout.tsx\n[app/(tabs)/_layout.tsx]" as TabsLayout
+    class "index.tsx\n[app/(tabs)/index.tsx]" as HomeIndex
+  }
+}
+
+class "Chat\n[components/chat/chat.tsx]" as ChatComp
+
+AppLayout --> TabsLayout : mounts
+TabsLayout --> HomeIndex : route "index"
+HomeIndex --> ChatComp : renders
+@enduml

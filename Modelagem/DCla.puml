@@ -1,0 +1,36 @@
+@startuml
+package "components.chat" {
+  class Chat {
+    - prompt: string
+    - messages: Message[]
+    - apiKey: string
+    - ai: GoogleGenAI
+    + handleSend(): Promise<void>
+    + render(): JSX.Element
+  }
+
+  class Message {
+    + role: 'user' | 'model'
+    + content: string
+    + number: number
+  }
+}
+
+package "components.chat.styles" {
+  class Container
+  class Input
+  class SendButtonTouchable
+  class HistoryView
+  class UserMessageBalloon
+  class BotMessageBalloon
+}
+
+Chat --> Message : manages >
+Chat ..> GoogleGenAI : uses >
+Chat ..> Container
+Chat ..> Input
+Chat ..> SendButtonTouchable
+Chat ..> HistoryView
+Chat ..> UserMessageBalloon
+Chat ..> BotMessageBalloon
+@enduml

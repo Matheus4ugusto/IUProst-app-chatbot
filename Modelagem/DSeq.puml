@@ -1,0 +1,23 @@
+@startuml
+actor User
+participant UI as "UI (S.Input / S.SendButtonTouchable)"
+participant Chat as "Chat\n[components/chat/chat.tsx]"
+participant AI as "GoogleGenAI\n[@google/genai]"
+participant State as "setMessages (state)"
+
+User -> UI: press send / submit
+UI -> Chat: onPress / onSubmit (prompt)
+Chat -> Chat: trim & validate prompt
+alt prompt not empty
+  Chat -> State: setMessages(+ user message)
+  Chat -> AI: generateContent(contents)
+  AI --> Chat: response (text: string | undefined)
+  alt response.text is string
+    Chat -> State: setMessages(+ model message)
+  else no text
+    Chat -> Chat: log / handle error
+  end
+else prompt empty
+  Chat -> Chat: return (no-op)
+end
+@enduml
